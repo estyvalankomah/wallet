@@ -5,7 +5,11 @@ import WalletTable from '../table/walletTable'
 
 function Wallets() {
 
-    const [items, setItems] = useState([])
+    const [wallets, setWallets] = useState([])
+    const [pageNumber, setPageNumber] = useState(0)
+
+    const walletsPerPage = 6
+    const pagesVisited = pageNumber * walletsPerPage
 
     const handlePageClick = (data) =>{
         console.log(data)
