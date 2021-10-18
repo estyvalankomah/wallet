@@ -1,12 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 import ReactPaginate from 'react-paginate'
 import './wallets.css'
 import WalletTable from '../table/walletTable'
 
 function Wallets() {
 
-    const handlePageClick = () =>{
+    const [items, setItems] = useState([])
 
+    const handlePageClick = (data) =>{
+        console.log(data)
     }
 
     return (
@@ -23,6 +25,14 @@ function Wallets() {
                 nextLabel={'>'}
                 pageCount={5}
                 onPageChange={handlePageClick}
+                containerClassName={'pagination justify-content-center'}
+                pageClassName={'page-item'}
+                pageLinkClassName={'page-link'}
+                previousLinkClassName={'page-link'}
+                previousClassName={'page-item'}
+                nextLinkClassName={'page-link'}
+                nextClassName={'page-item'}
+                activeClassName={'active'}
             />
         </div>
     )

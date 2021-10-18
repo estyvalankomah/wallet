@@ -13,7 +13,7 @@ function View(){
                 </div>
             </div>
             <div id="main-view">
-                <div id="title">Wallets</div>
+                {/* <div id="title">Wallets</div> */}
                 <Wallets />
             </div>
         </div>
