@@ -14,6 +14,12 @@
     padding-right: 3rem;
 }
 
+#wallet-name{
+    font-family: audiowave , sofia , trirong;
+    font-size: 2em;
+    color: rgb(46, 46, 117);
+}
+
 #profile{
     display: flex;
     align-items: center;

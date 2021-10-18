@@ -19,3 +19,16 @@ th, td {
 tr:nth-child(even) {
     background-color: #f2f2f2;
 }
+
+.active-status{
+    background-color: rgb(29, 199, 29);
+    padding: 8px;
+    border-radius: 20px;
+    color: white;
+    font-size: 12px;
+}
+
+.actions{
+    display: flex;
+    justify-content: space-evenly;
+}
