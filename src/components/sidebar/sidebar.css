@@ -1,0 +1,19 @@
+#sidebar{
+    width: 20%;
+    height: 100%;
+    background-color: rgb(46, 46, 117);
+    color: cornsilk;
+}
+
+#top{
+    text-align: center;
+    padding-top: 2rem;
+}
+
+#drawer{
+    padding: 2rem;
+}
+
+.drawer-item{
+    padding-bottom: 1.5rem;
+}
