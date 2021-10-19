@@ -28,6 +28,14 @@ tr:nth-child(even) {
     font-size: 12px;
 }
 
+.disabled-status{
+    background-color: red;
+    padding: 8px;
+    border-radius: 20px;
+    color: white;
+    font-size: 12px;
+}
+
 .actions{
     display: flex;
     justify-content: space-evenly;

@@ -1,14 +1,18 @@
 import React, { useState } from 'react'
 import { Form, Row, Col, Button } from 'react-bootstrap'
 
-function NewWalletForm() {
+function NewWalletForm({callback}) {
 
-    const [firstName, setFirstName] = useState("")
-    const [lastName, setLastName] = useState("")
-    const [otherName, setOtherName] = useState("")
-    const [idCardType, setIdCardType] = useState("")
-    const [idCardNumber, setIdCardNumber] = useState("")
-    const [availableBalance, setAvailableBalance] = useState(null)
+    const empty_wallet = {
+        first_name: "",
+        last_name: "",
+        other_name: "",
+        identification_card_type: "",
+        identification_card_number: "",
+        available_balance: ""
+    }
+
+    const [wallet, setWallet] = useState(empty_wallet)
 
     const handleSubmit = e =>{
         e.preventDefault();
@@ -17,47 +21,54 @@ function NewWalletForm() {
             headers: {
                 'Content-Type': 'application/json',
             },
+            body: JSON.stringify(wallet)
+        })
+        .then(res => res.json())
+        .then(json => {
+            callback(true, json.message, json.status_code)
         })
     }
 
     return (
-        <Form onSubmit={handleSubmit}>
-            <Form.Group className="mb-3">
-                <Form.Label>First Name</Form.Label>
-                <Form.Control type="text" value={firstName} onChange={e => setFirstName(e.target.value)}/>
-            </Form.Group>
-            <Form.Group className="mb-3">
-                <Form.Label>Last Name</Form.Label>
-                <Form.Control type="text" value={lastName} onChange={e => setLastName(e.target.value)} />
-            </Form.Group>
-            <Form.Group className="mb-3">
-                <Form.Label>Other Name(s)</Form.Label>
-                <Form.Control type="text" value={otherName} onChange={e => setOtherName(e.taarget.value)} />
-            </Form.Group>
-            <Row className="mb-3">
-                <Form.Group as={Col}>
-                    <Form.Label>ID Card Type</Form.Label>
-                    <Form.Select defaultValue="Choose..." value={idCardType} onChange={e => setIdCardType(e.target.value)}>
-                        <option disabled>Choose...</option>
-                        <option value="Ghana Card">Ghana Card</option>
-                        <option value="Passport">Passport</option>
-                        <option value="Voter's ID">Voter's ID</option>
-                        <option value="Driver's License">Driver's License</option>
-                    </Form.Select>
+        <>
+            <Form onSubmit={handleSubmit}>
+                <Form.Group className="mb-3">
+                    <Form.Label>First Name</Form.Label>
+                    <Form.Control type="text" value={wallet.first_name} onChange={e => setWallet({...wallet, first_name: e.target.value})} required/>
                 </Form.Group>
-                <Form.Group as={Col}>
-                    <Form.Label>ID Card Number</Form.Label>
-                    <Form.Control type="text" value={idCardNumber} onChange={e => setIdCardNumber(e.target.value)} />
+                <Form.Group className="mb-3">
+                    <Form.Label>Last Name</Form.Label>
+                    <Form.Control type="text" value={wallet.last_name} onChange={e => setWallet({...wallet, last_name: e.target.value})} required/>
                 </Form.Group>
-            </Row>
-            <Form.Group className="mb-3">
-                <Form.Label>Available Balance</Form.Label>
-                <Form.Control type="text" value={availableBalance} onChange={e => setAvailableBalance(e.target.value)} />
-            </Form.Group>
-            <Button variant="primary" type="submit">
-                Create new wallet
-            </Button>
-        </Form>
+                <Form.Group className="mb-3">
+                    <Form.Label>Other Name(s)</Form.Label>
+                    <Form.Control type="text" value={wallet.other_name} onChange={e => setWallet({...wallet, other_name: e.target.value})} />
+                </Form.Group>
+                <Row className="mb-3">
+                    <Form.Group as={Col}>
+                        <Form.Label>ID Card Type</Form.Label>
+                        <Form.Select defaultValue="Choose..." value={wallet.identification_card_type} onChange={e => setWallet({...wallet, identification_card_type: e.target.value})}>
+                            <option disabled>Choose...</option>
+                            <option value="Ghana Card">Ghana Card</option>
+                            <option value="Passport">Passport</option>
+                            <option value="Voter's ID">Voter's ID</option>
+                            <option value="Driver's License">Driver's License</option>
+                        </Form.Select>
+                    </Form.Group>
+                    <Form.Group as={Col}>
+                        <Form.Label>ID Card Number</Form.Label>
+                        <Form.Control type="text" value={wallet.identification_card_number} onChange={e => setWallet({...wallet, identification_card_number: e.target.value})} required />
+                    </Form.Group>
+                </Row>
+                <Form.Group className="mb-3">
+                    <Form.Label>Available Balance</Form.Label>
+                    <Form.Control type="text" value={wallet.available_balance} onChange={e => setWallet({...wallet, available_balance: e.target.value})} required />
+                </Form.Group>
+                <Button variant="primary" type="submit">
+                    Create new wallet
+                </Button>
+            </Form>
+        </>
     )
 }
 

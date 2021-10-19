@@ -11,13 +11,20 @@
 }
 
 #drawer{
-    padding: 2rem;
+    padding-top: 2rem;
 }
 
 .drawer-item{
     padding-bottom: 1.5rem;
+    padding-left: 2rem;
+    /* padding-top: 1rem; */
+    border-right: 4px solid white;
 }
 
 span{
     margin-left: 5px;
+}
+
+.drawer-item:hover{
+    cursor: pointer;
 }

@@ -43,7 +43,7 @@
 #main-view{
     height: 90%;
     background-color: rgb(238, 238, 238);
-    padding: 3rem;
+    padding: 2rem;
     padding-top: 1rem;
     /* display: flex; */
 }
@@ -52,3 +52,4 @@
     margin-bottom: 1rem;
     font-weight: 700;
 }
+
