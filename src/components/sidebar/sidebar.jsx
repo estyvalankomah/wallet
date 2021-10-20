@@ -57,7 +57,7 @@ function Sidebar() {
                             setBalance(balance)
                             if (successful){
                                 setToastMessage(message);
-                                status == 200 ? setToastStyle('success'): setToastStyle('danger')
+                                status === 200 ? setToastStyle('success'): setToastStyle('danger')
                                 setShowToast(true);
                             }
                         }}
@@ -75,7 +75,7 @@ function Sidebar() {
                             setBalance(balance)
                             if (successful){
                                 setToastMessage(message);
-                                status == 200 ? setToastStyle('success'): setToastStyle('danger')
+                                status === 200 ? setToastStyle('success'): setToastStyle('danger')
                                 setShowToast(true);
                             }
                     }}/>
