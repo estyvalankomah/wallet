@@ -49,7 +49,7 @@ function NewWalletForm({callback}) {
                         <Form.Label>ID Card Type</Form.Label>
                         <Form.Select defaultValue="Choose..." value={wallet.identification_card_type} onChange={e => setWallet({...wallet, identification_card_type: e.target.value})}>
                             <option disabled>Choose...</option>
-                            <option value="Ghana Card">Ghana Card</option>
+                            <option value="Ghana card">Ghana card</option>
                             <option value="Passport">Passport</option>
                             <option value="Voter's ID">Voter's ID</option>
                             <option value="Driver's License">Driver's License</option>

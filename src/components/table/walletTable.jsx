@@ -1,7 +1,7 @@
 import React, { useState,useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash, faSquare, faPencilAlt } from '@fortawesome/free-solid-svg-icons'
-import { Modal, ModalBody, ModalTitle, ToastContainer, Toast, ToastHeader, ToastBody } from 'react-bootstrap'
+import { Modal, ModalBody, ModalTitle } from 'react-bootstrap'
 import './walletTable.css'
 import UpdateWalletForm from '../forms/update_wallet_form'
 
@@ -68,13 +68,13 @@ function WalletTable({data, callback, updateCallback}) {
                     <td>{wallet.identification_card_number}</td>
                     <td>{wallet.available_balance}</td>
                     {
-                        wallet.status == "active" ? 
+                        wallet.status === "active" ? 
                         <td><span className="active-status">{wallet.status}</span></td> :
                         <td><span className="disabled-status">{wallet.status}</span></td>
                     }
                     <td className="actions">
                         {
-                            wallet.status == "active" ?
+                            wallet.status === "active" ?
                             <>
                             <FontAwesomeIcon title="Delete wallet" icon={faTrash} color="red" onClick={e => handleDelete(wallet.id)} />
                             <FontAwesomeIcon title="Edit wallet"  icon={faPencilAlt} onClick={e => handleShow(wallet)} />

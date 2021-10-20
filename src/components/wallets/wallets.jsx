@@ -34,7 +34,7 @@ function Wallets() {
            loadWallets()
         }
         setWalletsLoaded(true)
-    },[wallets, walletsLoaded])
+    },[wallets, walletsLoaded, loadWallets])
 
     const pageCount = Math.ceil(totalWallets / 6)
 
@@ -61,14 +61,14 @@ function Wallets() {
                 callback={(message, status) =>{
                     loadWallets();
                     setToastMessage(message);
-                    status == 200 ? setToastStyle('success'): setToastStyle('danger')
+                    status === 200 ? setToastStyle('success'): setToastStyle('danger')
                     setShowToast(true);
                 }}
                 updateCallback= {(successful, message, status) => {
                     loadWallets();
                     if (successful){
                         setToastMessage(message);
-                        status == 200 ? setToastStyle('success'): setToastStyle('danger')
+                        status === 200 ? setToastStyle('success'): setToastStyle('danger')
                         setShowToast(true);
                     }
                 }} 
@@ -98,7 +98,7 @@ function Wallets() {
                             handleClose();
                             if (successful){
                                 setToastMessage(message);
-                                status == 200 ? setToastStyle('success'): setToastStyle('danger')
+                                status === 200 ? setToastStyle('success'): setToastStyle('danger')
                                 setShowToast(true);
                             }
                         }} 
