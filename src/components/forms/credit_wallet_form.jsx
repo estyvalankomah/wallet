@@ -32,7 +32,7 @@ function CreditWalletForm({data, callback}) {
         <Form onSubmit={handleSubmit}>
             <Form.Group className="mb-3">
                 <Form.Label>Enter credit amount</Form.Label>
-                <Form.Control type="text" value={walletData.amount} onChange={e => setData({...walletData, amount: e.target.value})}/>
+                <Form.Control type="number" min="0" value={walletData.amount} step=".01" onChange={e => setData({...walletData, amount: e.target.value})}/>
             </Form.Group>
             <Button variant="primary" type="submit">
                 Credit wallet

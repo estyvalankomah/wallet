@@ -15,9 +15,8 @@
 }
 
 .drawer-item{
-    padding-bottom: 1.5rem;
+    margin-bottom: 1.5rem;
     padding-left: 2rem;
-    /* padding-top: 1rem; */
     border-right: 4px solid white;
 }
 

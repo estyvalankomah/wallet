@@ -47,7 +47,18 @@ function WalletTable({data, callback, updateCallback}) {
     const handleShow = (wallet) =>{
         setWalletData(wallet)
         setShow(true);
-    } 
+    }
+
+    const [dropdown, setDropdown] = useState(false);
+    const handleDropdown = (e) =>{
+        if(!dropdown){
+            setDropdown(true)
+            e.target.parentNode.nextSibling.style.display="flex"          
+        }else{
+            setDropdown(false)
+            e.target.parentNode.nextSibling.style.display="none"
+        }
+    }
 
     const handleDelete = (walletID) =>{
         fetch(`http://localhost:5000/api/v1/wallet/${walletID}`, {
@@ -92,25 +103,29 @@ function WalletTable({data, callback, updateCallback}) {
                     <td className="actions">
                         {
                             wallet.status === "active" ?
-                            <div className="bg-warning" style={{height: "18px", width: "6rem"}}>
+                            <div style={{height: "18px", width: "6rem"}}>
                                 <div className="d-flex justify-content-between w-100">
                                     <FontAwesomeIcon title="Delete wallet" icon={faTrash} color="red" onClick={e => handleDelete(wallet.id)} />
                                     <FontAwesomeIcon title="Edit wallet"  icon={faPencilAlt} onClick={e => handleShow(wallet)} />
                                     <FontAwesomeIcon title="Disable" icon={faSquare} onClick={e => handleDisable(wallet.id)} />
-                                    <FontAwesomeIcon title="More" icon={faCaretDown}/>
+                                    <FontAwesomeIcon title="More" icon={faCaretDown} onClick={e => handleDropdown(e)} />
                                 </div>
                                 <div className="more-dropdown" aria-labelledby="dropdownMenuButton">
                                     <div className="dropdown-item" onClick={e => handleShowCreditModal(wallet)}>Credit</div>
-                                    {/* <a class="dropdown-item" onClick={handleShowDebitModal}>Debit</a> */}
+                                    <div className="dropdown-item" onClick={e => handleShowDebitModal(wallet)}>Debit</div>
                                 </div>
                             </div>
                              :
-                            <div className="bg-warning" style={{height: "18px"}}>
-                                <div className="d-flex justify-content-between w-100">
+                             <div style={{height: "18px", width: "6rem"}}>
+                                <div className="d-flex w-100 justify-content-between">
                                     <FontAwesomeIcon title="Delete wallet" icon={faTrash} color="red" onClick={e => handleDelete(wallet.id)} />
                                     <FontAwesomeIcon title="Edit wallet"  icon={faPencilAlt} onClick={e => handleShow(wallet)} />
                                     <FontAwesomeIcon title="Activate" icon={faSquare} color="rgb(29, 199, 29)" onClick={e => handleDisable(wallet.id)} />
-                                    <FontAwesomeIcon title="More" icon={faCaretDown}/>
+                                    <FontAwesomeIcon title="More" icon={faCaretDown} onClick={e => handleDropdown(e)} />
+                                </div>
+                                <div className="more-dropdown" aria-labelledby="dropdownMenuButton">
+                                    <div className="dropdown-item" onClick={e => handleShowCreditModal(wallet)}>Credit</div>
+                                    <div className="dropdown-item" onClick={e => handleShowDebitModal(wallet)}>Debit</div>
                                 </div>
                             </div>
                         }
