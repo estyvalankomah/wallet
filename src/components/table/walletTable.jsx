@@ -1,24 +1,41 @@
 import React, { useState,useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrash, faSquare, faPencilAlt } from '@fortawesome/free-solid-svg-icons'
-import { Modal, ModalBody, ModalTitle } from 'react-bootstrap'
+import { faTrash, faSquare, faPencilAlt, faCartArrowDown, faCaretDown } from '@fortawesome/free-solid-svg-icons'
+import { Modal, ModalBody, ModalTitle, DropdownButton, Dropdown } from 'react-bootstrap'
 import './walletTable.css'
 import UpdateWalletForm from '../forms/update_wallet_form'
+import DebitWalletForm from '../forms/debit_wallet_form'
+import CreditWalletForm from '../forms/credit_wallet_form'
 
 function WalletTable({data, callback, updateCallback}) {
 
-    const empty_wallet = {
-        first_name: "",
-        last_name: "",
-        other_name: "",
-        identification_card_type: "",
-        identification_card_number: "",
-        available_balance: 0.00
-    }
+    // const empty_wallet = {
+    //     first_name: "",
+    //     last_name: "",
+    //     other_name: "",
+    //     identification_card_type: "",
+    //     identification_card_number: "",
+    //     available_balance: 0.00
+    // }
 
     const [wallet, setWallet] = useState(data);
     const [show, setShow] = useState(false);
-    const [walletData, setWalletData] = useState(empty_wallet)
+    const [walletData, setWalletData] = useState({})
+
+
+    const [showDebitModal, setShowDebitModal] = useState(false);
+    const handleCloseDebitModal = () => setShowDebitModal(false);
+    const handleShowDebitModal = (wallet) =>{
+        setWalletData(wallet)
+        setShowDebitModal(true);
+    }
+
+    const [showCreditModal, setShowCreditModal] = useState(false);
+    const handleCloseCreditModal = () => setShowCreditModal(false);
+    const handleShowCreditModal = (wallet) =>{
+        setWalletData(wallet)
+        setShowCreditModal(true);
+    }
   
     useEffect(() => {
         
@@ -75,13 +92,27 @@ function WalletTable({data, callback, updateCallback}) {
                     <td className="actions">
                         {
                             wallet.status === "active" ?
-                            <>
-                            <FontAwesomeIcon title="Delete wallet" icon={faTrash} color="red" onClick={e => handleDelete(wallet.id)} />
-                            <FontAwesomeIcon title="Edit wallet"  icon={faPencilAlt} onClick={e => handleShow(wallet)} />
-                            <FontAwesomeIcon title="Disable" icon={faSquare} onClick={e => handleDisable(wallet.id)} /></> :
-                            <>
-                            <FontAwesomeIcon title="Delete wallet" icon={faTrash} color="red" onClick={e => handleDelete(wallet.id)} />
-                            <FontAwesomeIcon title="Edit wallet"  icon={faPencilAlt} onClick={e => handleShow(wallet)} /></>
+                            <div className="bg-warning" style={{height: "18px", width: "6rem"}}>
+                                <div className="d-flex justify-content-between w-100">
+                                    <FontAwesomeIcon title="Delete wallet" icon={faTrash} color="red" onClick={e => handleDelete(wallet.id)} />
+                                    <FontAwesomeIcon title="Edit wallet"  icon={faPencilAlt} onClick={e => handleShow(wallet)} />
+                                    <FontAwesomeIcon title="Disable" icon={faSquare} onClick={e => handleDisable(wallet.id)} />
+                                    <FontAwesomeIcon title="More" icon={faCaretDown}/>
+                                </div>
+                                <div className="more-dropdown" aria-labelledby="dropdownMenuButton">
+                                    <div className="dropdown-item" onClick={e => handleShowCreditModal(wallet)}>Credit</div>
+                                    {/* <a class="dropdown-item" onClick={handleShowDebitModal}>Debit</a> */}
+                                </div>
+                            </div>
+                             :
+                            <div className="bg-warning" style={{height: "18px"}}>
+                                <div className="d-flex justify-content-between w-100">
+                                    <FontAwesomeIcon title="Delete wallet" icon={faTrash} color="red" onClick={e => handleDelete(wallet.id)} />
+                                    <FontAwesomeIcon title="Edit wallet"  icon={faPencilAlt} onClick={e => handleShow(wallet)} />
+                                    <FontAwesomeIcon title="Activate" icon={faSquare} color="rgb(29, 199, 29)" onClick={e => handleDisable(wallet.id)} />
+                                    <FontAwesomeIcon title="More" icon={faCaretDown}/>
+                                </div>
+                            </div>
                         }
                     </td>
                 </tr>
@@ -118,6 +149,33 @@ function WalletTable({data, callback, updateCallback}) {
                             updateCallback(successful, message, status)     
                         }} 
                     />
+                </ModalBody>
+            </Modal>
+            <Modal show={showDebitModal} onHide={handleCloseDebitModal} aria-labelledby="contained-modal-title-vcenter" centered>
+                <Modal.Header closeButton>
+                    <ModalTitle>Debit Wallet</ModalTitle>
+                </Modal.Header>
+                <ModalBody>
+                    <DebitWalletForm
+                        data={walletData}
+                        callback={(successful, message, status) => {
+                            handleCloseDebitModal();
+                            updateCallback(successful, message, status) 
+                        }}
+                     />
+                </ModalBody>
+            </Modal>
+            <Modal show={showCreditModal} onHide={handleCloseCreditModal} aria-labelledby="contained-modal-title-vcenter" centered>
+                <Modal.Header closeButton>
+                    <ModalTitle>Credit Wallet</ModalTitle>
+                </Modal.Header>
+                <ModalBody>
+                    <CreditWalletForm 
+                        data={walletData}
+                        callback={(successful, message, status) => {
+                            handleCloseCreditModal();
+                            updateCallback(successful, message, status)
+                    }}/>
                 </ModalBody>
             </Modal>
         </div>

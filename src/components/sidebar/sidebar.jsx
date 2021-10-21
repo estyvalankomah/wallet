@@ -9,13 +9,13 @@ import { ToastContainer, Toast, ToastHeader, ToastBody } from 'react-bootstrap'
 
 function Sidebar() {
 
-    const [showDebitModal, setShowDebitModal] = useState(false);
-    const handleCloseDebitModal = () => setShowDebitModal(false);
-    const handleShowDebitModal = () => setShowDebitModal(true);
+    // const [showDebitModal, setShowDebitModal] = useState(false);
+    // const handleCloseDebitModal = () => setShowDebitModal(false);
+    // const handleShowDebitModal = () => setShowDebitModal(true);
 
-    const [showCreditModal, setShowCreditModal] = useState(false);
-    const handleCloseCreditModal = () => setShowCreditModal(false);
-    const handleShowCreditModal = () => setShowCreditModal(true);
+    // const [showCreditModal, setShowCreditModal] = useState(false);
+    // const handleCloseCreditModal = () => setShowCreditModal(false);
+    // const handleShowCreditModal = () => setShowCreditModal(true);
 
     const [showToast, setShowToast] = useState(false);
     const [toastMessage, setToastMessage] = useState("")
@@ -37,16 +37,16 @@ function Sidebar() {
                     <FontAwesomeIcon icon={faWallet} />
                     <span>Wallets</span>
                 </div>
-                <div className="drawer-item"  onClick={handleShowCreditModal}>
+                {/* <div className="drawer-item"  onClick={handleShowCreditModal}>
                     <FontAwesomeIcon icon={faCoins} />
                     <span>Credit wallet</span>
                 </div>
                 <div className="drawer-item" onClick={handleShowDebitModal}>
                     <FontAwesomeIcon icon={faHandHoldingUsd} />
                     <span>Debit wallet</span>
-                </div>
+                </div> */}
             </div>
-            <Modal show={showDebitModal} onHide={handleCloseDebitModal} aria-labelledby="contained-modal-title-vcenter" centered>
+            {/* <Modal show={showDebitModal} onHide={handleCloseDebitModal} aria-labelledby="contained-modal-title-vcenter" centered>
                 <Modal.Header closeButton>
                     <ModalTitle>Debit Wallet</ModalTitle>
                 </Modal.Header>
@@ -88,7 +88,7 @@ function Sidebar() {
                     </ToastHeader>
                     <ToastBody>{toastMessage}</ToastBody>
                 </Toast>
-            </ToastContainer>
+            </ToastContainer> */}
         </div>
     )
 }

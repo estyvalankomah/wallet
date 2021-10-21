@@ -40,3 +40,10 @@ tr:nth-child(even) {
     display: flex;
     justify-content: space-evenly;
 }
+
+.more-dropdown{
+    border: 1px solid silver;
+    border-radius: 5px;
+    background-color: white;
+    /* display: none; */
+}

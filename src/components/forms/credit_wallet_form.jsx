@@ -1,13 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Form, Button } from 'react-bootstrap'
 
-function CreditWalletForm({callback}) {
+function CreditWalletForm({data, callback}) {
     const credit_data = {
-        id: "",
+        id: data.id,
         amount: ""
     }
 
-    const [data, setData] = useState(credit_data)
+    const [walletData, setData] = useState(credit_data)
 
     const handleSubmit = e =>{
         e.preventDefault();
@@ -16,23 +16,23 @@ function CreditWalletForm({callback}) {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(data)
+            body: JSON.stringify(walletData)
         })
         .then(res => res.json())
         .then(json => {
-            callback(true, json.message, json.data.balance, json.status_code)
+            callback(true, json.message, json.status_code)
         })
     }
+
+    useEffect(() => {
+        console.log(credit_data.id)
+    })
 
     return (
         <Form onSubmit={handleSubmit}>
             <Form.Group className="mb-3">
-                <Form.Label>Wallet ID</Form.Label>
-                <Form.Control type="text" value={data.id} onChange={e => setData({...data, id: e.target.value})}/>
-            </Form.Group>
-            <Form.Group className="mb-3">
-                <Form.Label>Amount</Form.Label>
-                <Form.Control type="text" value={data.amount} onChange={e => setData({...data, amount: e.target.value})}/>
+                <Form.Label>Enter credit amount</Form.Label>
+                <Form.Control type="text" value={walletData.amount} onChange={e => setData({...walletData, amount: e.target.value})}/>
             </Form.Group>
             <Button variant="primary" type="submit">
                 Credit wallet

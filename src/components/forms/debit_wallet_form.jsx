@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
 import { Form, Button } from 'react-bootstrap'
 
-function DebitWalletForm({callback}) {
+function DebitWalletForm({data, callback}) {
     const debit_data = {
-        id: "",
+        id: data.id,
         amount: ""
     }
 
-    const [data, setData] = useState(debit_data)
+    const [walletData, setData] = useState(debit_data)
 
     const handleSubmit = e =>{
         e.preventDefault();
@@ -16,23 +16,19 @@ function DebitWalletForm({callback}) {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(data)
+            body: JSON.stringify(walletData)
         })
         .then(res => res.json())
         .then(json => {
-            callback(true, json.message, json.data.balance, json.status_code)
+            callback(true, json.message, json.status_code)
         })
     }
 
     return (
         <Form onSubmit={handleSubmit}>
             <Form.Group className="mb-3">
-                <Form.Label>Wallet ID</Form.Label>
-                <Form.Control type="text" value={data.id} onChange={e => setData({...data, id: e.target.value})}/>
-            </Form.Group>
-            <Form.Group className="mb-3">
                 <Form.Label>Amount</Form.Label>
-                <Form.Control type="text" value={data.amount} onChange={e => setData({...data, amount: e.target.value})}/>
+                <Form.Control type="text" value={walletData.amount} onChange={e => setData({...walletData, amount: e.target.value})}/>
             </Form.Group>
             <Button variant="primary" type="submit">
                 Debit wallet
