@@ -45,10 +45,29 @@ tr:nth-child(even) {
 }
 
 .more-dropdown{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.more-dropdown-button {
+    display: block;
+}
+
+.more-dropdown-menu{
+    display: none;
+    flex-direction: column;
+    position: absolute;
     border: 1px solid silver;
     border-radius: 5px;
     background-color: white;
-    margin-top: 5px;
-    display: none;
-    flex-direction: column;
+    margin-top: 15px;
+    left: 50%;
+    right: auto;
+    transform: translate(-50%, 0);
+    z-index: 100;
+}
+
+.more-dropdown:hover .more-dropdown-menu{
+    display: block;
 }
