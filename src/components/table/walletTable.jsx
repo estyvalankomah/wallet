@@ -1,7 +1,7 @@
 import React, { useState,useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrash, faSquare, faPencilAlt, faCartArrowDown, faCaretDown } from '@fortawesome/free-solid-svg-icons'
-import { Modal, ModalBody, ModalTitle, DropdownButton, Dropdown } from 'react-bootstrap'
+import { faTrash, faSquare, faPencilAlt, faCaretDown } from '@fortawesome/free-solid-svg-icons'
+import { Button, Modal, ModalBody, ModalTitle, ModalFooter } from 'react-bootstrap'
 import './walletTable.css'
 import UpdateWalletForm from '../forms/update_wallet_form'
 import DebitWalletForm from '../forms/debit_wallet_form'
@@ -19,6 +19,7 @@ function WalletTable({data, callback, updateCallback}) {
     // }
 
     const [wallet, setWallet] = useState(data);
+    const [id, setID] = useState(1);
     const [show, setShow] = useState(false);
     const [walletData, setWalletData] = useState({})
 
@@ -36,6 +37,12 @@ function WalletTable({data, callback, updateCallback}) {
         setWalletData(wallet)
         setShowCreditModal(true);
     }
+
+    const [confirmModal, setShowConfirmModal] = useState(false);
+    const handleConfirmModal = (id) => {
+        setID(id)
+        setShowConfirmModal(!confirmModal);
+    }
   
     useEffect(() => {
         
@@ -49,15 +56,15 @@ function WalletTable({data, callback, updateCallback}) {
         setShow(true);
     }
 
-    const [dropdown, setDropdown] = useState(false);
+    // const [dropdown, setDropdown] = useState(false);
     const handleDropdown = (e) =>{
-        if(!dropdown){
-            setDropdown(true)
-            e.target.parentNode.nextSibling.style.display="flex"          
-        }else{
-            setDropdown(false)
-            e.target.parentNode.nextSibling.style.display="none"
-        }
+        // if(!dropdown){
+        //     setDropdown(true)
+        //     e.target.parentNode.nextSibling.style.display="flex"          
+        // }else{
+        //     setDropdown(false)
+        //     e.target.parentNode.nextSibling.style.display="none"
+        // }
     }
 
     const handleDelete = (walletID) =>{
@@ -69,12 +76,26 @@ function WalletTable({data, callback, updateCallback}) {
         })
         .then(res => res.json())
         .then(json => {
+            setShowConfirmModal(false)
             callback(json.message, json.status_code)
         })
     }
 
     const handleDisable = (walletID) =>{
         fetch(`http://localhost:5000/api/v1/wallet/${walletID}/disable`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+        .then(res => res.json())
+        .then(json => {
+            callback(json.message, json.status_code)
+        })
+    }
+
+    const handleActivate = (walletID) =>{
+        fetch(`http://localhost:5000/api/v1/wallet/${walletID}/activate`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -97,15 +118,15 @@ function WalletTable({data, callback, updateCallback}) {
                     <td>{wallet.available_balance}</td>
                     {
                         wallet.status === "active" ? 
-                        <td><span className="active-status">{wallet.status}</span></td> :
-                        <td><span className="disabled-status">{wallet.status}</span></td>
+                        <td><div className="status active-status">{wallet.status}</div></td> :
+                        <td><div className="status disabled-status">{wallet.status}</div></td>
                     }
                     <td className="actions">
                         {
                             wallet.status === "active" ?
                             <div style={{height: "18px", width: "6rem"}}>
                                 <div className="d-flex justify-content-between w-100">
-                                    <FontAwesomeIcon title="Delete wallet" icon={faTrash} color="red" onClick={e => handleDelete(wallet.id)} />
+                                    <FontAwesomeIcon title="Delete wallet" icon={faTrash} color="red" onClick={e => handleConfirmModal(wallet.id)} />
                                     <FontAwesomeIcon title="Edit wallet"  icon={faPencilAlt} onClick={e => handleShow(wallet)} />
                                     <FontAwesomeIcon title="Disable" icon={faSquare} onClick={e => handleDisable(wallet.id)} />
                                     <FontAwesomeIcon title="More" icon={faCaretDown} onClick={e => handleDropdown(e)} />
@@ -120,12 +141,8 @@ function WalletTable({data, callback, updateCallback}) {
                                 <div className="d-flex w-100 justify-content-between">
                                     <FontAwesomeIcon title="Delete wallet" icon={faTrash} color="red" onClick={e => handleDelete(wallet.id)} />
                                     <FontAwesomeIcon title="Edit wallet"  icon={faPencilAlt} onClick={e => handleShow(wallet)} />
-                                    <FontAwesomeIcon title="Activate" icon={faSquare} color="rgb(29, 199, 29)" onClick={e => handleDisable(wallet.id)} />
+                                    <FontAwesomeIcon title="Activate" icon={faSquare} color="rgb(29, 199, 29)" onClick={e => handleActivate(wallet.id)} />
                                     <FontAwesomeIcon title="More" icon={faCaretDown} onClick={e => handleDropdown(e)} />
-                                </div>
-                                <div className="more-dropdown" aria-labelledby="dropdownMenuButton">
-                                    <div className="dropdown-item" onClick={e => handleShowCreditModal(wallet)}>Credit</div>
-                                    <div className="dropdown-item" onClick={e => handleShowDebitModal(wallet)}>Debit</div>
                                 </div>
                             </div>
                         }
@@ -192,6 +209,18 @@ function WalletTable({data, callback, updateCallback}) {
                             updateCallback(successful, message, status)
                     }}/>
                 </ModalBody>
+            </Modal>
+            <Modal show={confirmModal} onHide={handleConfirmModal} aria-labelledby="contained-modal-title-vcenter" centered>
+                <Modal.Header closeButton>
+                    <ModalTitle>Delete Wallet</ModalTitle>
+                </Modal.Header>
+                <ModalBody>
+                    Are you sure you want to delete this wallet?
+                </ModalBody>
+                <ModalFooter>
+                    <Button variant="danger" onClick={e => handleDelete(id)}>Confirm</Button>
+                    <Button variant="secondary" onClick={handleConfirmModal}>Cancel</Button>
+                </ModalFooter>
             </Modal>
         </div>
     )

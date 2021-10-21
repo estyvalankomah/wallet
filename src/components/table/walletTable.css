@@ -20,20 +20,23 @@ tr:nth-child(even) {
     background-color: #f2f2f2;
 }
 
-.active-status{
-    background-color: rgb(29, 199, 29);
-    padding: 8px;
+.status{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 3px;
+    width: 4rem;
     border-radius: 20px;
     color: white;
     font-size: 12px;
 }
 
+.active-status{
+    background-color: rgb(29, 199, 29);
+}
+
 .disabled-status{
     background-color: red;
-    padding: 8px;
-    border-radius: 20px;
-    color: white;
-    font-size: 12px;
 }
 
 .actions{

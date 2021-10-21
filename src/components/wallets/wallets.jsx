@@ -105,8 +105,8 @@ function Wallets() {
                     />
                 </ModalBody>
             </Modal>
-            <ToastContainer className="bg-success rounded" bg={toastStyle} position="top-end">
-                <Toast onClose={() => setShowToast(false)}  show={showToast} delay={3000} autohide>
+            <ToastContainer className="mt-3 rounded" position="top-center">
+                <Toast onClose={() => setShowToast(false)} bg={toastStyle} show={showToast} delay={3000} autohide>
                     <ToastHeader closeButton>
                     <strong className="me-auto">Response</strong>
                     </ToastHeader>
