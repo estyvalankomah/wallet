@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react'
 import ReactPaginate from 'react-paginate'
 import './wallets.css'
 import WalletTable from '../table/walletTable'
-import { Modal, ModalBody, ModalTitle, ToastContainer, Toast, ToastHeader, ToastBody } from 'react-bootstrap'
+import { Modal, ModalBody, ModalTitle } from 'react-bootstrap'
+import toast, { Toaster } from "react-hot-toast";
 import NewWalletForm from '../forms/new_wallet_form'
 
 function Wallets() {
@@ -15,6 +16,11 @@ function Wallets() {
     const [showToast, setShowToast] = useState(false);
     const [toastMessage, setToastMessage] = useState("")
     const [toastStyle, setToastStyle] = useState("")
+
+    const [toastSuccess, setToastSuccess] = useState("")
+    const [toastFailed, setToastFailed] = useState("")
+
+    const sucessNotify = () => toast.success("Sucess!");
 
     const handleClose = () => {
         setShow(false);
@@ -105,14 +111,15 @@ function Wallets() {
                     />
                 </ModalBody>
             </Modal>
-            <ToastContainer className="mt-3 rounded" position="top-center">
+            <Toaster />
+            {/* <ToastContainer className="mt-3 rounded" position="top-center">
                 <Toast onClose={() => setShowToast(false)} bg={toastStyle} show={showToast} delay={3000} autohide>
                     <ToastHeader closeButton>
                     <strong className="me-auto">Response</strong>
                     </ToastHeader>
                     <ToastBody>{toastMessage}</ToastBody>
                 </Toast>
-            </ToastContainer>
+            </ToastContainer> */}
         </div>
     )
 }
