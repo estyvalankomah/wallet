@@ -13,12 +13,6 @@ function Wallets() {
     const [walletsLoaded, setWalletsLoaded] = useState(false)
     const [pageNumber, setPageNumber] = useState(0)
     const [show, setShow] = useState(false);
-    const [showToast, setShowToast] = useState(false);
-    const [toastMessage, setToastMessage] = useState("")
-    const [toastStyle, setToastStyle] = useState("")
-
-    // const [toastSuccess, setToastSuccess] = useState("")
-    // const [toastFailed, setToastFailed] = useState("")
 
     const successNotify = (msg) => toast.success(msg);
     const failNotify = (msg) => toast.error(msg)
@@ -107,14 +101,6 @@ function Wallets() {
                 </ModalBody>
             </Modal>
             <Toaster />
-            {/* <ToastContainer className="mt-3 rounded" position="top-center">
-                <Toast onClose={() => setShowToast(false)} bg={toastStyle} show={showToast} delay={3000} autohide>
-                    <ToastHeader closeButton>
-                    <strong className="me-auto">Response</strong>
-                    </ToastHeader>
-                    <ToastBody>{toastMessage}</ToastBody>
-                </Toast>
-            </ToastContainer> */}
         </div>
     )
 }
