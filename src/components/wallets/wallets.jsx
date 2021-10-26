@@ -17,10 +17,11 @@ function Wallets() {
     const [toastMessage, setToastMessage] = useState("")
     const [toastStyle, setToastStyle] = useState("")
 
-    const [toastSuccess, setToastSuccess] = useState("")
-    const [toastFailed, setToastFailed] = useState("")
+    // const [toastSuccess, setToastSuccess] = useState("")
+    // const [toastFailed, setToastFailed] = useState("")
 
-    const sucessNotify = () => toast.success("Sucess!");
+    const successNotify = (msg) => toast.success(msg);
+    const failNotify = (msg) => toast.error(msg)
 
     const handleClose = () => {
         setShow(false);
@@ -66,16 +67,12 @@ function Wallets() {
                 data={wallets}
                 callback={(message, status) =>{
                     loadWallets();
-                    setToastMessage(message);
-                    status === 200 ? setToastStyle('success'): setToastStyle('danger')
-                    setShowToast(true);
+                    status === 200 ? successNotify(message): failNotify(message)
                 }}
                 updateCallback= {(successful, message, status) => {
                     loadWallets();
                     if (successful){
-                        setToastMessage(message);
-                        status === 200 ? setToastStyle('success'): setToastStyle('danger')
-                        setShowToast(true);
+                        status === 200 ? successNotify(message): failNotify(message)
                     }
                 }} 
             />
@@ -103,9 +100,7 @@ function Wallets() {
                             loadWallets();
                             handleClose();
                             if (successful){
-                                setToastMessage(message);
-                                status === 200 ? setToastStyle('success'): setToastStyle('danger')
-                                setShowToast(true);
+                                status === 200 ? successNotify(message): failNotify(message)
                             }
                         }} 
                     />
